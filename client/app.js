@@ -199,6 +199,13 @@ class TWindow {
     input.setAttribute("type", "text");
     form.appendChild(input);
 
+    let toEmit = ''
+    if (this.type == 'task'){
+      toEmit = 'answer';
+    } else {
+      toEmit = 'message';
+    }
+
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
@@ -207,7 +214,7 @@ class TWindow {
       //console.log(e.target.parentNode.dataset.pid);
 
       if (input.value) {
-        socket.emit("message", {
+        socket.emit(toEmit, {
           winId: e.target.parentNode.dataset.pid,
           message: input.value,
         });
