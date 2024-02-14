@@ -1,0 +1,162 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: radial-gradient(circle at center, #111 0, #16161d 100%);
+}
+
+.container {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  place-items: center;
+}
+
+.game {
+  position: relative;
+  border: 8px solid gray;
+  max-height: 90vh;
+  max-width: 90vw;
+  height: 1080px;
+  aspect-ratio: 16 / 9;
+}
+
+.user-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #fff;
+}
+
+.win {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.95);
+  transform: scale(0);
+  opacity: 0;
+  transition: 0.25s ease-in-out;
+  transition-delay: 0.25s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.win li{
+  list-style: none;
+  padding: 4px 8px;
+}
+
+.win__header {
+  background-color: #333;
+  color: #fff;
+  cursor: crosshair;
+  padding: 4px 8px;
+}
+
+.win__content{
+  height: 100%;
+  max-height: 100%;
+  margin-top:8px;
+  scrollbar-width: none;
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.win__content p{
+  font-size: 24px;
+  padding-left:8px;
+}
+
+.win__form{
+  justify-self: end;
+  padding: 2px 4px;
+  margin: 4px;
+}
+
+.win__form input{
+  padding: 2px 4px;
+  width: 90%;
+}
+
+.win.open {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.win.front {
+  z-index: 99;
+}
+
+.win.being-dragged {
+  transition: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.topBar {
+  background: gray;
+  height: 4rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+}
+
+.gameTitle {
+  color: #f2f2f2;
+  font-size: 2rem;
+}
+
+.musicBtn {
+  background:#16161d;
+  border-radius: 5px;
+  border: 1px solid #f2f2f2;
+  padding: 5px 20px;
+  margin-left: 20px;
+  color: #f2f2f2;
+
+}
+
+.login form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.bigTitle{
+  font-size: 6rem;
+  color: #f2f2f2;
+}
+
+.nameField {
+  width: 60%;
+  height: 2rem;
+  margin:auto;
+  padding: 2px 12px;
+  border-radius:5px;
+}
+
+.submitBtn {
+  width: 40%;
+  height: auto;
+  font-size: 2rem;
+  margin:auto;
+  border-radius:5px;
+}
+
+.statBox{
+  margin-top: 20px;;
+  margin-left: 20px;
+  font-size: 1.25rem;
+  color: #f2f2f2;
+  max-width:fit-content;
+}
+.statBox li{
+  list-style: none;
+}

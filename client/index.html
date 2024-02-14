@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Barrage</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css" />
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.min.js"
+      integrity="sha512-skuhu6jj+sQnhLq1Txsack8VfnIrX8wL+MTFilYlFFT/NuLJm7eya7zOROs39Jy5cjASMEWqxLzijRVmKhsqWQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <audio id="bgAudio">
+      <source src="bg-kraftwerk.mp3" type="audio/mpeg">
+    </audio>
+    <div class="container">
+      <div class="login" id="login">
+        <form id="login-form">
+          <h1 class="bigTitle">Math Barrage</h1>
+          <input type="text" name="username" id="username" class="nameField" placeholder="Enter username" />
+          <button type="submit" class="submitBtn">LAUNCH</button>
+        </form>
+      </div>
+      <div id="game" class="game hidden">
+        <div class="topBar">
+          <span class="gameTitle">Math Barrage</span>
+          <div>
+            <button onclick="playAudio()" type="button" class="musicBtn">Play Audio</button>
+            <button onclick="pauseAudio()" type="button" class="musicBtn">Pause Audio</button>
+          </div> 
+        </div>
+        <div class="statBox">
+          <ul>
+            <li id="userName">Name</li>
+            <li id="highScore">Best: </li>
+            <li id="score">Score: </li>
+            <li id="lives">Lives: </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
