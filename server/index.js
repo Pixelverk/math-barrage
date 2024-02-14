@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
 
     console.log(`${socket.id} is now known as ${newPlayer.username}`);
 
-    newSession.start(socket)
+    newSession.start(players, socket)
 
   });
 
@@ -56,9 +56,9 @@ io.on("connection", (socket) => {
 
     let windowMatch = windowCheck(player, winId);
 
-    let windowType = windowMatch.type;
+    //let windowType = windowMatch.type;
 
-    if (windowType === "chat") {
+    if (windowMatch.type === "chat") {
       return io.emit("message", message);
     }
 
@@ -70,9 +70,7 @@ io.on("connection", (socket) => {
 
     let windowMatch = windowCheck(player, winId);
 
-    let windowType = windowMatch.type;
-
-    if (windowType === "task") {
+    if (windowMatch && windowMatch.type === "task") {
 
       if (message != windowMatch.answer) {
         windowMatch.wrong(players, socket);
@@ -80,6 +78,8 @@ io.on("connection", (socket) => {
 
         if (session.lives <= 0){
             session.end(players, socket);
+            player.session = new Session(player)
+            player.session.start(players, socket)
           }
           socket.emit("response", {
             winId,
@@ -93,6 +93,8 @@ io.on("connection", (socket) => {
             message: "Correct, adding points!",
           });
         }
+    } else {
+      socket.emit("closeWindow", winId);
     }
   
   });
@@ -107,6 +109,7 @@ io.on("connection", (socket) => {
     data.highScore = player.highscore;
     data.score = player.session.score;
     data.lives = player.session.lives;
+    data.session = player.session.id;
 
     socket.emit("receiveStats", data )
 

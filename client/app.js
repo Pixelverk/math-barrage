@@ -3,6 +3,8 @@ const login = document.getElementById("login");
 const loginForm = document.getElementById("login-form");
 const game = document.getElementById("game");
 
+let clientSession = '';
+
 const socket = io("ws://localhost:3500");
 
 let windowCount = 0;
@@ -65,7 +67,11 @@ socket.on("response", ({ winId, message }) => {
 
 socket.on(
   "openWindow",
-  ({ id, type, height, width, posX, posY, title, problem }) => {
+  ({ id, type, height, width, posX, posY, title, problem, session}) => {
+    
+    if (session != clientSession && clientSession != ''){
+      return;
+    }
     let x = new TWindow(id, type, height, width, posX, posY, title, problem);
     x.render();
     socket.emit("checkStats", "");
@@ -84,14 +90,17 @@ socket.on("closeWindow", (winId) => {
 socket.on("receiveStats", (data) => {
   let statBox = document.querySelector(`.statBox`);
   let name = statBox.querySelector("#userName");
+  let session = statBox.querySelector("#session");
   let highScore = statBox.querySelector("#highScore");
   let score = statBox.querySelector("#score");
-  let lives = statBox.querySelector("#lives");
+  let lives = statBox.querySelector("#lives");  
 
   name.innerHTML = data.name;
+  session.innerHTML = data.session;
   highScore.innerHTML = "Best: " + data.highScore;
   score.innerHTML = "Score: " + data.score;
   lives.innerHTML = "Lives: " + data.lives;
+  clientSession = data.session;
 
 });
 

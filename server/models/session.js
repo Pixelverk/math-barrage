@@ -10,25 +10,38 @@ export class Session{
         this.lives = 3;
         this.windows = []
     }
-    start(socket){
+    start(players, socket){
 
         socket.emit("message", "round starting");
 
-        this.lives = 3;
-        this.score = 0
+        let player = this.getOwner(players);
 
-        setInterval(() => {
-            if (this.windows.length <= 3){
-                let task = new Task(this)
-                task.randomize()
-                this.windows.push(task)
+        this.lives = 3;
+        this.score = 0;
+        let queue = "empty";
+
+        this.windowInterval = setInterval(() => {
+          
+            if (this.windows.length <= 3 && queue === "empty"){
+                queue = "full";
                 setTimeout(() => {
-                    socket.emit("openWindow", task);
-                }, Math.floor(Math.random() * 9000));
+                    let task = new Task(this);
+                    task.randomize();
+                    if (task.session == player.session.id){
+                        this.windows.push(task)
+                        socket.emit("openWindow", task);
+                    } else {
+                        return;
+                    }
+                    queue = "empty";
+                }, Math.floor(Math.random() * 8000) + 1 );
             }
+            
         }, 1000);
     }
     end(players, socket){
+
+        clearInterval(this.windowInterval);
 
         socket.emit("message", "round ending");
 
@@ -42,9 +55,6 @@ export class Session{
         this.windows = this.windows.filter((win) => win.type == 'chat');
 
         socket.emit("reStart", "");
-        setTimeout(() => {
-            this.start(socket);
-        }, 3000);
         
     }
     getOwner(players){
