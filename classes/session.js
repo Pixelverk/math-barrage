@@ -44,7 +44,7 @@ export class Session{
         socket.emit("message", "round started");
 
     }
-    end(players, socket){
+    end(players, socket, db){
 
         clearInterval(this.windowInterval);
 
@@ -55,6 +55,15 @@ export class Session{
         if (player.highscore < this.score) {
             player.highscore = this.score;
             socket.emit("message", "new highscore");
+
+            let hs = {
+                score: this.score,
+                user: player.username,
+                session: this.id,
+            }
+            db.highscores.push(hs)
+            console.log(db.highscores)
+
         }
 
         this.windows = []

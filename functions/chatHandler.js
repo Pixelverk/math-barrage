@@ -26,7 +26,7 @@ export function checkAnswer( { winId, message, socket, db } ){
         let session = player.session;
 
         if (session.lives <= 0){
-            session.end(players, socket);
+            session.end(players, socket, db);
             player.session = new Session(player)
             player.session.start(players, socket)
           }
