@@ -1,5 +1,3 @@
-import { Session} from "./session.js";
-
 export class Player{
     constructor(id, username){
         this.id = id;

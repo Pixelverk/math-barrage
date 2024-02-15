@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { Chat, Task} from "./window.js";
+import { Chat, Task } from './window.js';
 
 export class Session{
     constructor(player){
@@ -19,6 +19,11 @@ export class Session{
         this.lives = 3;
         this.score = 0;
         let queue = "empty";
+
+        let newChat = new Chat(this);
+        this.windows.push(newChat);
+        socket.emit("openWindow", newChat);
+        console.log('told player to open new chat')
 
         this.windowInterval = setInterval(() => {
           
@@ -52,7 +57,8 @@ export class Session{
             socket.emit("message", "new highscore");
         }
 
-        this.windows = this.windows.filter((win) => win.type == 'chat');
+        this.windows = []
+        //this.windows = this.windows.filter((win) => win.type == 'chat');
 
         socket.emit("reStart", "");
         

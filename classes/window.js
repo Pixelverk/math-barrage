@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 
-class Window{
+export class Window{
     constructor(session){
         this.id = "W_" + nanoid(10);
         this.session = session.id;

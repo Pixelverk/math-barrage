@@ -1,3 +1,8 @@
+// socket connection
+// const socket = io("ws://localhost:3500");
+const socket = io();
+
+
 // Elements
 const login = document.getElementById("login");
 const loginForm = document.getElementById("login-form");
@@ -5,7 +10,7 @@ const game = document.getElementById("game");
 
 let clientSession = '';
 
-const socket = io("ws://localhost:3500");
+
 
 let windowCount = 0;
 
@@ -19,6 +24,7 @@ function loginUser(e) {
 
   if (username) {
     socket.emit("newLogin", username);
+
     login.classList.toggle("hidden");
     game.classList.toggle("hidden");
   } else {
@@ -68,10 +74,6 @@ socket.on("response", ({ winId, message }) => {
 socket.on(
   "openWindow",
   ({ id, type, height, width, posX, posY, title, problem, session}) => {
-    
-    if (session != clientSession && clientSession != ''){
-      return;
-    }
     let x = new TWindow(id, type, height, width, posX, posY, title, problem);
     x.render();
     socket.emit("checkStats", "");
@@ -105,7 +107,7 @@ socket.on("receiveStats", (data) => {
 });
 
 socket.on("reStart", () => {
-  let items = document.querySelectorAll("div[data-type='task']")
+  let items = document.querySelectorAll(".win")
   for (let i = 0; i < items.length; i++) {
     items[i].remove();
   }
