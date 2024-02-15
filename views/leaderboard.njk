@@ -16,17 +16,32 @@
     <script defer src="client.js"></script>
   </head>
   <body>
-    <div class="container">
-      <div class="leaderboard">
-        <h1 class="bigTitle">Leaderboard</h1>
-        <ul>
-            <li>Score - User - Session</li>
-            <li>12345 - Someone - 321qwe</li>
-            {% for item in data %}
-              <li>{{ item.score }} - {{ item.user }} - {{ item.session }}</li>
-            {% endfor %}
-        </ul>
+    <div class="leaderboard">
+      <h1 class="bigTitle">Leaderboard</h1>
+      <div class="table">
+        <div class="tableRow">
+          <div class="tableItem tableHeading">Score</div>
+          <div class="tableItem tableHeading">User</div>
+          <div class="tableItem tableHeading">Session</div>
+        </div>
+        {%if data[0] %}
+        {% for item in data %}
+        <div class="tableRow">
+          <div class="tableItem itemScore">{{ item.score }}</div>
+          <div class="tableItem itemUser">{{ item.user }}</div>
+          <div class="tableItem itemSession">{{ item.session }}</div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="tableRow">
+          <div class="tableItem itemScore">999</div>
+          <div class="tableItem itemUser">DummyName</div>
+          <div class="tableItem itemSession">123dummysession</div>
+        </div>
+        {% endif %}
       </div>
+      <br>
+      <p>To-Do: sort rows by score</p>
     </div>
   </body>
 </html>
