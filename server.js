@@ -1,10 +1,18 @@
 // server setup
 import express from "express";
+import nunjucks from "nunjucks";
 import { Server } from "socket.io";
 
 const PORT = process.env.PORT || 3500;
 
 const app = express();
+
+nunjucks.configure('views', {
+  autoescape: true,
+  express: app
+});
+
+app.set('view engine', 'njk');
 
 const server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
@@ -19,23 +27,25 @@ const io = new Server(server, {
   },
 });
 
-// load routes
-import { index } from './routes/index.js';
-import { leaderboard } from './routes/leaderboard.js';
-
-// use routes
-app.use('/', index);
-app.use('/game/', leaderboard);
-
-// use static files
-app.use(express.static('./public'))
-
 // "database"
 const db = {
   startTime: '',
   players: [],
   highscores: []
 }
+
+// basic routes
+app.get("/", (req, res) =>{
+  res.render('index');
+});
+
+app.get("/leaderboard", (req, res) =>{
+  res.render('leaderboard', { data: db.highscores });
+});
+
+// use static files
+app.use(express.static('./public'))
+
 
 // import handlers
 import { receiveMessage, checkAnswer } from "./functions/chatHandler.js";

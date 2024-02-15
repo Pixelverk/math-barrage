@@ -62,8 +62,6 @@ export class Session{
                 session: this.id,
             }
             db.highscores.push(hs)
-            console.log(db.highscores)
-
         }
 
         this.windows = []
