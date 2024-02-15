@@ -74,6 +74,13 @@ socket.on("response", ({ winId, message }) => {
 socket.on(
   "openWindow",
   ({ id, type, height, width, posX, posY, title, problem, session}) => {
+    if (type == 'chat'){
+      let chatRendered = document.querySelector("div[data-type='chat']");
+      if (chatRendered){
+        chatRendered.setAttribute("data-pid", id);
+        return;
+      }
+    }
     let x = new TWindow(id, type, height, width, posX, posY, title, problem);
     x.render();
     socket.emit("checkStats", "");
@@ -106,11 +113,16 @@ socket.on("receiveStats", (data) => {
 
 });
 
-socket.on("reStart", () => {
-  let items = document.querySelectorAll(".win")
-  for (let i = 0; i < items.length; i++) {
-    items[i].remove();
+socket.on("removeTasks", () => {
+  let taskWindows = document.querySelectorAll("div[data-type='task']");
+  for (let i = 0; i < taskWindows.length; i++) {
+    taskWindows[i].remove();
   }
+});
+
+socket.on("newChatPid", (chatPid) => {
+  let chatWindow = document.querySelector("div[data-type='chat']");
+  chatWindow.setAttribute("data-pid", chatPid);
 });
 
 /**

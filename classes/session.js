@@ -12,8 +12,6 @@ export class Session{
     }
     start(players, socket){
 
-        socket.emit("message", "round starting");
-
         let player = this.getOwner(players);
 
         this.lives = 3;
@@ -23,7 +21,6 @@ export class Session{
         let newChat = new Chat(this);
         this.windows.push(newChat);
         socket.emit("openWindow", newChat);
-        console.log('told player to open new chat')
 
         this.windowInterval = setInterval(() => {
           
@@ -43,6 +40,9 @@ export class Session{
             }
             
         }, 1000);
+
+        socket.emit("message", "round started");
+
     }
     end(players, socket){
 
@@ -58,9 +58,8 @@ export class Session{
         }
 
         this.windows = []
-        //this.windows = this.windows.filter((win) => win.type == 'chat');
 
-        socket.emit("reStart", "");
+        socket.emit("removeTasks", "");
         
     }
     getOwner(players){
