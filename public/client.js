@@ -120,11 +120,6 @@ socket.on("removeTasks", () => {
   }
 });
 
-socket.on("newChatPid", (chatPid) => {
-  let chatWindow = document.querySelector("div[data-type='chat']");
-  chatWindow.setAttribute("data-pid", chatPid);
-});
-
 /**
  * Terminal Window
  */
