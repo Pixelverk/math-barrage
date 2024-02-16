@@ -2,15 +2,12 @@
 // const socket = io("ws://localhost:3500");
 const socket = io();
 
-
 // Elements
 const login = document.getElementById("login");
 const loginForm = document.getElementById("login-form");
 const game = document.getElementById("game");
 
 let clientSession = '';
-
-
 
 let windowCount = 0;
 

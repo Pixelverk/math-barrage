@@ -40,12 +40,11 @@ app.get("/", (req, res) =>{
 });
 
 app.get("/leaderboard", (req, res) =>{
-  res.render('leaderboard', { data: db.highscores });
+  res.render('leaderboard', { startTime: db.startTime, scores: db.highscores });
 });
 
 // use static files
 app.use(express.static('./public'))
-
 
 // import handlers
 import { receiveMessage, checkAnswer } from "./functions/chatHandler.js";

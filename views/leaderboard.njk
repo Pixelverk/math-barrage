@@ -3,29 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Math Barrage</title>
+    <title>Math Barrage Leaderboard</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="/style.css" />
-    <script
-      defer
-      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.min.js"
-      integrity="sha512-skuhu6jj+sQnhLq1Txsack8VfnIrX8wL+MTFilYlFFT/NuLJm7eya7zOROs39Jy5cjASMEWqxLzijRVmKhsqWQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script defer src="client.js"></script>
   </head>
   <body>
     <div class="leaderboard">
       <h1 class="bigTitle">Leaderboard</h1>
+      <p>These are the best scores since the server started on {{ startTime }}</p>
       <div class="table">
         <div class="tableRow">
           <div class="tableItem tableHeading">Score</div>
           <div class="tableItem tableHeading">User</div>
           <div class="tableItem tableHeading">Session</div>
         </div>
-        {%if data[0] %}
-        {% for item in data %}
+        {% if scores[0] %}
+        {% for item in scores %}
         <div class="tableRow">
           <div class="tableItem itemScore">{{ item.score }}</div>
           <div class="tableItem itemUser">{{ item.user }}</div>

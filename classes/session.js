@@ -66,7 +66,7 @@ export class Session{
 
         this.windows = []
 
-        socket.emit("removeTasks", "");
+        socket.emit("removeTasks");
         
     }
     getOwner(players){
