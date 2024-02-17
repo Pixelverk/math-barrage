@@ -31,7 +31,23 @@ const io = new Server(server, {
 const db = {
   startTime: '',
   players: [],
-  highscores: []
+  highscores: [
+    {
+      score: 5,
+      user: 'tester1',
+      session: 'noSession',
+    },
+    {
+      score: 2,
+      user: 'tester2',
+      session: 'noSession',
+    },
+    {
+      score: 20,
+      user: 'tester3',
+      session: 'noSession',
+    }
+  ]
 }
 
 // basic routes
@@ -40,7 +56,7 @@ app.get("/", (req, res) =>{
 });
 
 app.get("/leaderboard", (req, res) =>{
-  res.render('leaderboard', { startTime: db.startTime, scores: db.highscores });
+  res.render('leaderboard', { startTime: db.startTime, scores: sortScores(db.highscores) });
 });
 
 // use static files
@@ -73,6 +89,8 @@ io.on("connection", (socket) => {
 
 });
 
+// random utils?
+
 // get server start time
 function fancyDate(){
   let date_ob = new Date();
@@ -81,7 +99,24 @@ function fancyDate(){
   let year = date_ob.getFullYear();
   let hours = date_ob.getHours();
   let minutes = date_ob.getMinutes();
+  if (minutes < 10) {
+    minutes = '0' + minutes;
+  }
   return (year + "-" + month + "-" + date + " " + hours + ":" + minutes);
 }
 // store server start time in DB
 db.startTime = fancyDate();
+
+// sort highscores
+function sortScores(scores){  
+
+  function compareNumbers(a, b) {
+    return a.score - b.score;
+  }
+
+  let ascending = scores.sort(compareNumbers);
+  let descending = ascending.reverse();
+
+  return descending;
+
+}
